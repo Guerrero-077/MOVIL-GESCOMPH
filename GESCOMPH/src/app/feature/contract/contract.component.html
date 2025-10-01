@@ -1,0 +1,14 @@
+<ion-content>
+  <app-table
+    [data]="data"
+    [columns]="columns"
+    titulo="Contratos"
+    subTitulo="Listado de contratos"
+    [showActionsColumn]="true"
+    [showViewButton]="true"
+    (view)="onView($event)"
+    (download)="onDownload($event)">
+  </app-table>
+
+</ion-content>
+
