@@ -27,11 +27,21 @@ export class ContractComponent  implements OnInit {
     { key: 'active', header: 'Activo' }
   ];
 
-  constructor(private mockService: ContractService) {}
+  constructor(private contractService: ContractService) {}
 
   ngOnInit() {
-    this.mockService.getList().subscribe(list => this.data = list);
+    this.loadData();
   }
+
+  loadData() {
+    this.contractService.getAll().then(obs$ => {
+      obs$.subscribe(data => {
+        this.data = data;
+      });
+      console.log('Datos cargados:', this.data);
+    });
+  }
+
 
   onView(row: ContractCard) {
     console.log('Ver:', row);

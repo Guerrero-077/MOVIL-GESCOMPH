@@ -1,17 +1,14 @@
 import { inject, Injectable } from "@angular/core";
-import { ContractStore } from "./contract.store";
 import { from, Observable, of, switchMap, tap } from "rxjs";
-import { ContractCard } from "../models/contract.models";
 import { environment } from "src/environments/environment";
 import { CapacitorHttp } from "@capacitor/core";
+import { EstablishmentSelect } from "../model/establishment.models";
 
 @Injectable({
     providedIn: 'root'
 })
-export class ContractService {
-  private  readonly urlBase = environment.apiURL + '/contracts/';
-
-  private contractStore = inject(ContractStore);
+export class EstablishmentService {
+  private  readonly urlBase = environment.apiURL + '/establishments/';
 
   private async buildHeaders(): Promise<Record<string, string>> {
     return {
@@ -20,19 +17,18 @@ export class ContractService {
     };
   }
 
-  async getAll(): Promise<Observable<ContractCard[]>> {
+  async getAll(): Promise<Observable<EstablishmentSelect[]>> {
     // Simulación de llamada HTTP
     return from(
       CapacitorHttp.get({
-        url: this.urlBase + 'mine',
+        url: this.urlBase,
         headers: await this.buildHeaders()
       })
     ).pipe(
       tap((response) => {
-        const data = response.data as ContractCard[];
-        this.contractStore.setRows(data);
+        const data = response.data as EstablishmentSelect[];
       }),
-      switchMap((response) => of(response.data as ContractCard[]))
+      switchMap((response) => of(response.data as EstablishmentSelect[]))
     );
   }
 }
